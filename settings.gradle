@@ -1,2 +1,4 @@
 rootProject.name = 'NetworkColorMaker'
+include 'colormaker-api'
+include 'colormaker-plugin'
 
