@@ -43,6 +43,18 @@ public class ColorAPI {
         return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).findFirst();
     }
 
+    public static Optional<NetworkColor> getPrimaryColor(String colorName) {
+        return CacheAPI.Colors.getCachedColors().stream()
+                .filter(NetworkColor::isPrimaryColor)
+                .filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+    }
+
+    public static Optional<NetworkColor> getSecondaryColor(String colorName) {
+        return CacheAPI.Colors.getCachedColors().stream()
+                .filter(NetworkColor::isSecondaryColor)
+                .filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+    }
+
     public static Optional<ColorPlayer> createNewPlayer(UUID uniqueId) {
         Optional<NetworkColor> optionalPrimaryColor = getDefaultPrimaryColor();
         Optional<NetworkColor> optionalSecondaryColor = getDefaultSecondaryColor();

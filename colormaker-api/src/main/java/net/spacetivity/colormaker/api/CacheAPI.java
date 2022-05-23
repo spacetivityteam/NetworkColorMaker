@@ -13,6 +13,10 @@ public class CacheAPI {
             return ColorRepository.getInstance().getCachedColors();
         }
 
+        public static boolean isExisting(String colorName) {
+            return getCachedColors().stream().anyMatch(color -> color.getColorName().equalsIgnoreCase(colorName));
+        }
+
         public static void cacheColors() {
             ColorRepository.getInstance().getNetworkColorManager().getAllAsync().thenAccept(colors -> getCachedColors().addAll(colors));
         }

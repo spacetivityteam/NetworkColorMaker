@@ -2,12 +2,16 @@ package net.spacetivity.colormaker.api.color;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import net.kyori.adventure.text.format.TextColor;
 import net.spacetivity.colormaker.api.CacheAPI;
 import net.spacetivity.colormaker.api.ColorTranslator;
 
 @Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class NetworkColor {
 
     private String colorName;

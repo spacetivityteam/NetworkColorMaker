@@ -1,6 +1,7 @@
 dependencies {
     implementation project(':colormaker-api')
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly "org.spigotmc:spigot:1.18-R02"
     compileOnly 'com.velocitypowered:velocity-api:3.0.1'
     annotationProcessor 'com.velocitypowered:velocity-api:3.0.1'
     compileOnly group: 'net.md-5', name: 'bungeecord-api', version: '1.18-R0.1-SNAPSHOT'

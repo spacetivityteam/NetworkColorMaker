@@ -6,3 +6,5 @@ website: https://github.com/spacetivityteam
 api-version: 1.18
 depend:
   - NetworkColorMakerDatabase
+commands:
+  color:

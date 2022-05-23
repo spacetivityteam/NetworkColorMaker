@@ -54,4 +54,15 @@ public class PlayerListener implements Listener {
 
         }
     }
+
+    public void test(Player player) {
+        NetworkColor primaryColor = ColorAPI.getPrimaryColor(player.getUniqueId());
+        NetworkColor secondaryColor = ColorAPI.getSecondaryColor(player.getUniqueId());
+
+        player.sendMessage(Component.text()
+                .append(Component.text(player.getName()).color(primaryColor.toPaper()))
+                .append(Component.text(" has the level: "))
+                .append(Component.text(player.getLevel()).color(secondaryColor.toPaper()))
+                .append(Component.text(" (For: Paper & Velocity)")));
+    }
 }
