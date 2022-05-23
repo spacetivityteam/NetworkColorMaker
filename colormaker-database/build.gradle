@@ -1,8 +1,13 @@
 dependencies {
-    implementation project(':colormaker-api')
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.0.0'
+    implementation group: 'org.redisson', name: 'redisson', version: '3.16.7'
+    implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.0.2-rc'
+
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+
     compileOnly 'com.velocitypowered:velocity-api:3.0.1'
     annotationProcessor 'com.velocitypowered:velocity-api:3.0.1'
+
     compileOnly group: 'net.md-5', name: 'bungeecord-api', version: '1.18-R0.1-SNAPSHOT'
 }
 

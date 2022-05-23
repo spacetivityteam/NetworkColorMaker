@@ -1,0 +1,8 @@
+name: NetworkColorMaker
+version: '1.0'
+main: net.spacetivity.colormaker.plugin.spigot.SpigotInitializer
+author: TGamings
+website: https://github.com/spacetivityteam
+api-version: 1.18
+depend:
+  - NetworkColorMakerDatabase

@@ -1,0 +1,7 @@
+name: NetworkColorMaker
+version: '1.0'
+main: net.spacetivity.colormaker.plugin.bungee.BungeeInitializer
+author: TGamings
+website: https://github.com/spacetivityteam
+depends:
+  - NetworkColorMakerDatabase

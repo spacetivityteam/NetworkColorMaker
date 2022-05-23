@@ -1,8 +1,6 @@
-package net.spacetivity.colormaker.api.database;
+package net.spacetivity.colormaker.database;
 
-import com.google.gson.Gson;
 import lombok.Getter;
-import net.spacetivity.colormaker.api.ColorRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,13 +21,10 @@ public abstract class DatabasePattern<T> {
     protected final DatabaseManager databaseManager;
     protected final Executor executor;
 
-    protected final Gson gson;
-
     public DatabasePattern(String tableName) {
         this.tableName = tableName;
-        this.databaseManager = ColorRepository.getInstance().getDatabaseManager();
+        this.databaseManager = DatabaseRepository.getInstance().getDatabaseManager();
         this.executor = Executors.newSingleThreadExecutor();
-        this.gson = ColorRepository.GSON;
     }
 
     public String createQueryStatement(String tableName, String... fields) {

@@ -1,6 +1,6 @@
 package net.spacetivity.colormaker.api.color;
 
-import net.spacetivity.colormaker.api.database.DatabasePattern;
+import net.spacetivity.colormaker.database.DatabasePattern;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,11 +60,12 @@ public class NetworkColorManager extends DatabasePattern<NetworkColor> {
 
         try {
             String colorName = resultSet.getString("colorName");
-            String hexCode = resultSet.getString("hexCode");
+            String hexCode = resultSet.getString("colorCode");
+            boolean useHexadecimal = resultSet.getBoolean("useHexadecimal");
             String permission = resultSet.getString("permission");
             boolean isPrimaryColor = resultSet.getBoolean("isPrimaryColor");
             boolean isSecondaryColor = resultSet.getBoolean("isSecondaryColor");
-            networkColor = NetworkColor.from(colorName, hexCode, permission, isPrimaryColor, isSecondaryColor);
+            networkColor = NetworkColor.from(colorName, hexCode, useHexadecimal, permission, isPrimaryColor, isSecondaryColor);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,14 +75,15 @@ public class NetworkColorManager extends DatabasePattern<NetworkColor> {
 
     @Override
     public void insertObject(NetworkColor networkColor) {
-        String queryStatement = createQueryStatement(tableName, "colorName", "hexCode", "permission", "isPrimaryColor", "isSecondaryColor");
+        String queryStatement = createQueryStatement(tableName, "colorName", "colorCode", "useHexadecimal", "permission", "isPrimaryColor", "isSecondaryColor");
         try (Connection connection = databaseManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(queryStatement);
             statement.setString(1, networkColor.getColorName());
-            statement.setString(2, networkColor.getHexCode());
-            statement.setString(3, networkColor.getPermission());
-            statement.setBoolean(4, networkColor.isPrimaryColor());
-            statement.setBoolean(5, networkColor.isSecondaryColor());
+            statement.setString(2, networkColor.getColorCode());
+            statement.setBoolean(3, networkColor.isUseHexadecimal());
+            statement.setString(4, networkColor.getPermission());
+            statement.setBoolean(5, networkColor.isPrimaryColor());
+            statement.setBoolean(6, networkColor.isSecondaryColor());
             statement.executeUpdate();
             statement.close();
         } catch (SQLException e) {
