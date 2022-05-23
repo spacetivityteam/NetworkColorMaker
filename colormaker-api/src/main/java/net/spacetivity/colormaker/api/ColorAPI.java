@@ -53,7 +53,6 @@ public class ColorAPI {
         String defaultSecondaryColor = optionalSecondaryColor.get().getColorName();
         ColorPlayer colorPlayer = ColorPlayer.from(uniqueId, defaultPrimaryColor, defaultSecondaryColor);
         ColorRepository.getInstance().getColorPlayerManager().insertObject(colorPlayer);
-        System.out.println("INSERTED PLAYER");
         return Optional.of(colorPlayer);
     }
 
