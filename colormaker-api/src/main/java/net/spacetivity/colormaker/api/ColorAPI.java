@@ -7,6 +7,8 @@ import net.spacetivity.colormaker.api.player.ColorPlayerManager;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ColorAPI {
 
@@ -23,8 +25,9 @@ public class ColorAPI {
         ColorRepository.getInstance().onDisable();
     }
 
-    public static void saveColorToDatabase(NetworkColor color) {
+    public static void saveColorToDatabase(NetworkColor color, boolean updateCache) {
         ColorRepository.getInstance().getNetworkColorManager().insertObject(color);
+        if (updateCache) CacheAPI.Colors.updateCachedColorsAsync();
     }
 
     public static void setDefaultPrimaryColor(NetworkColor color) {
@@ -36,30 +39,29 @@ public class ColorAPI {
     }
 
     public static Optional<NetworkColor> getDefaultPrimaryColor() {
-        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).findFirst();
+        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).findAny();
     }
 
     public static Optional<NetworkColor> getDefaultSecondaryColor() {
-        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).findFirst();
+        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).findAny();
     }
 
     public static Optional<NetworkColor> getPrimaryColor(String colorName) {
-        return CacheAPI.Colors.getCachedColors().stream()
-                .filter(NetworkColor::isPrimaryColor)
-                .filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
     }
 
     public static Optional<NetworkColor> getSecondaryColor(String colorName) {
-        return CacheAPI.Colors.getCachedColors().stream()
-                .filter(NetworkColor::isSecondaryColor)
-                .filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
     }
 
     public static Optional<ColorPlayer> createNewPlayer(UUID uniqueId) {
         Optional<NetworkColor> optionalPrimaryColor = getDefaultPrimaryColor();
         Optional<NetworkColor> optionalSecondaryColor = getDefaultSecondaryColor();
 
-        if (optionalPrimaryColor.isEmpty() || optionalSecondaryColor.isEmpty()) return Optional.empty();
+        if (optionalPrimaryColor.isEmpty() || optionalSecondaryColor.isEmpty()) {
+            Logger.getGlobal().log(Level.WARNING, "Player could not be created, because there was no primary and / or secondary color was found.");
+            return Optional.empty();
+        }
 
         String defaultPrimaryColor = optionalPrimaryColor.get().getColorName();
         String defaultSecondaryColor = optionalSecondaryColor.get().getColorName();
@@ -74,12 +76,12 @@ public class ColorAPI {
 
     public static NetworkColor getPrimaryColor(UUID uniqueId) {
         String primaryColor = CacheAPI.Player.getCachedPlayer(uniqueId).getPrimaryColor();
-        return NetworkColor.from(primaryColor);
+        return NetworkColor.fromCachedColor(primaryColor);
     }
 
     public static NetworkColor getSecondaryColor(UUID uniqueId) {
         String secondaryColor = CacheAPI.Player.getCachedPlayer(uniqueId).getSecondaryColor();
-        return NetworkColor.from(secondaryColor);
+        return NetworkColor.fromCachedColor(secondaryColor);
     }
 
     public static void updatePrimaryColor(ColorPlayer colorPlayer, String primaryColor) {

@@ -132,6 +132,15 @@ public class ItemBuilder {
         return this;
     }
 
+    @SuppressWarnings("deprecation")
+    public ItemBuilder setDisplayNameSpigot(String name) {
+        this.itemMeta = this.itemStack.getItemMeta();
+        assert this.itemMeta != null;
+        this.itemMeta.setDisplayName(name);
+        this.itemStack.setItemMeta(this.itemMeta);
+        return this;
+    }
+
     public ItemBuilder setType(Material material) {
         this.itemMeta = this.itemStack.getItemMeta();
         this.itemStack.setType(material);

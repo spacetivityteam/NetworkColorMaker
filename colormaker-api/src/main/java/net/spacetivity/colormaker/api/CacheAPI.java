@@ -3,13 +3,14 @@ package net.spacetivity.colormaker.api;
 import net.spacetivity.colormaker.api.color.NetworkColor;
 import net.spacetivity.colormaker.api.player.ColorPlayer;
 
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public class CacheAPI {
 
     public static class Colors {
-        public static Set<NetworkColor> getCachedColors() {
+        public static List<NetworkColor> getCachedColors() {
             return ColorRepository.getInstance().getCachedColors();
         }
 

@@ -11,13 +11,15 @@ import net.spacetivity.colormaker.database.DatabaseRepository;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
 public class ColorRepository {
 
     private final Set<ColorPlayer> cachedPlayers = new LinkedHashSet<>();
-    private final Set<NetworkColor> cachedColors = new LinkedHashSet<>();
+    private final List<NetworkColor> cachedColors = new CopyOnWriteArrayList<>();
 
     @Getter
     private static ColorRepository instance;

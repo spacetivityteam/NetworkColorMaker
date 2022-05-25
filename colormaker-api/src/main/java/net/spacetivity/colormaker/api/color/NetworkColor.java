@@ -21,12 +21,16 @@ public class NetworkColor {
     private boolean isPrimaryColor;
     private boolean isSecondaryColor;
 
-    public static NetworkColor from(String name, String hexCode, boolean useHexadecimal, String permission, boolean isPrimary, boolean isSecondary) {
-        return new NetworkColor(name, hexCode, useHexadecimal, permission, isPrimary, isSecondary);
+    public static NetworkColor from(String colorName, String colorCode, boolean useHexadecimal, String permission, boolean isPrimary, boolean isSecondary) {
+        return new NetworkColor(colorName, colorCode, useHexadecimal, permission, isPrimary, isSecondary);
     }
 
-    public static NetworkColor from(String name) {
-        return CacheAPI.Colors.getCachedColors().stream().filter(networkColor -> networkColor.getColorName().equalsIgnoreCase(name))
+    public static NetworkColor from(String colorName, String colorCode, boolean useHexadecimal, String permission) {
+        return new NetworkColor(colorName, colorCode, useHexadecimal, permission, false, false);
+    }
+
+    public static NetworkColor fromCachedColor(String colorName) {
+        return CacheAPI.Colors.getCachedColors().stream().filter(networkColor -> networkColor.getColorName().equalsIgnoreCase(colorName))
                 .findFirst().orElse(null);
     }
 

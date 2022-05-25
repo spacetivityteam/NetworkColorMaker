@@ -5,6 +5,7 @@ dependencies {
     compileOnly 'com.velocitypowered:velocity-api:3.0.1'
     annotationProcessor 'com.velocitypowered:velocity-api:3.0.1'
     compileOnly group: 'net.md-5', name: 'bungeecord-api', version: '1.18-R0.1-SNAPSHOT'
+    compileOnly "com.mojang:authlib:1.5.21"
 }
 
 jar {

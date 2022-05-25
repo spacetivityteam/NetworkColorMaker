@@ -1,4 +1,4 @@
-package net.spacetivity.colormaker.plugin.spigot;
+package net.spacetivity.colormaker.plugin.spigot.file;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
