@@ -4,14 +4,20 @@ import net.spacetivity.colormaker.api.color.NetworkColor;
 import net.spacetivity.colormaker.api.player.ColorPlayer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 public class CacheAPI {
 
     public static class Color {
         public static List<NetworkColor> getCachedColors() {
             return ColorRepository.getInstance().getCachedColors();
+        }
+
+        public static Optional<NetworkColor> getColor(Predicate<? super NetworkColor> filter) {
+            return getCachedColors().stream().filter(filter).findFirst();
         }
 
         public static boolean isExisting(String colorName) {

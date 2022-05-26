@@ -50,6 +50,11 @@ public class ItemBuilder {
                 .build();
     }
 
+    public static ItemBuilder builder(Material material, String displayName) {
+        return new ItemBuilder(material)
+                .setDisplayNameSpigot(displayName);
+    }
+
     public ItemBuilder(ItemStack itemStack) {
         this.itemStack = new ItemStack(itemStack);
         this.itemMeta = itemStack.getItemMeta();
@@ -213,6 +218,14 @@ public class ItemBuilder {
     public ItemBuilder setLores(List<String> lore) {
         this.itemMeta = this.itemStack.getItemMeta();
         Objects.requireNonNull(this.itemMeta).lore(lore.stream().map(Component::text).collect(Collectors.toList()));
+        this.itemStack.setItemMeta(this.itemMeta);
+        return this;
+    }
+
+    @SuppressWarnings("deprecation")
+    public ItemBuilder setLoresSpigot(List<String> lore) {
+        this.itemMeta = this.itemStack.getItemMeta();
+        this.itemMeta.setLore(lore);
         this.itemStack.setItemMeta(this.itemMeta);
         return this;
     }

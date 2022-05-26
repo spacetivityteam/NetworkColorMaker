@@ -41,9 +41,9 @@ public class ColorCommand implements CommandExecutor, TabCompleter {
         if (args.length == 0) {
             player.sendMessage("§3Color §7| Color setup commands: ");
             player.sendMessage("§f> §7/color createChatColor");
-            player.sendMessage("§f> §7/color createCustomColor <Name> <HexCode> <isPrimary>");
+            player.sendMessage("§f> §7/color createCustomColor <Name> <HexCode> [isPrimary]");
 
-        } else if (args.length == 4 && args[0].equalsIgnoreCase("createCustomColor")) {
+        } else if (args.length >= 3 && args[0].equalsIgnoreCase("createCustomColor")) {
 
             String name = args[1];
 
@@ -59,24 +59,46 @@ public class ColorCommand implements CommandExecutor, TabCompleter {
 
             String colorCode = args[2];
 
-            if (!args[3].equalsIgnoreCase("true") && !args[3].equalsIgnoreCase("false")) {
-                player.sendMessage("§cPlease enter a boolean! §e(true / false)");
-                return true;
-            }
-
-            boolean isPrimary = Boolean.parseBoolean(args[3]);
-
-            NetworkColor newColor = NetworkColor.from(
-                    name,
+            NetworkColor newColor = NetworkColor.from( name,
                     colorCode,
                     true,
-                    "color." + name,
-                    isPrimary,
-                    !isPrimary
-            );
+                    "color." + name);
+
+            if (args.length > 3) {
+
+                if (!args[3].equalsIgnoreCase("true") && !args[3].equalsIgnoreCase("false")) {
+                    player.sendMessage("§cPlease enter a boolean! §e(true / false)");
+                    return true;
+                }
+
+                boolean isPrimary = Boolean.parseBoolean(args[3]);
+
+                boolean primaryField;
+                boolean secondaryField;
+
+                if (isPrimary && ColorAPI.getDefaultPrimaryColor().isPresent()) {
+                    player.sendMessage("§cThere is already a default primary color.");
+                    primaryField = false;
+                } else {
+                    primaryField = isPrimary;
+                }
+
+                if (!isPrimary && ColorAPI.getDefaultSecondaryColor().isPresent()) {
+                    player.sendMessage("§cThere is already a default secondary color.");
+                    secondaryField = false;
+                } else {
+                    secondaryField = !isPrimary;
+                }
+
+                newColor.setDefaultPrimaryColor(primaryField);
+                newColor.setDefaultSecondaryColor(secondaryField);
+            } else {
+                newColor.setDefaultPrimaryColor(false);
+                newColor.setDefaultSecondaryColor(false);
+            }
 
             ColorAPI.saveColorToDatabase(newColor, true);
-            player.sendMessage("§7Created color " + newColor.toSpigot() + newColor.getColorName() + " §7(Primary: §f" + isPrimary + "§7)");
+            player.sendMessage("§7Created color " + newColor.toSpigot() + newColor.getColorName() + " §7(Primary: §f" + newColor.isDefaultPrimaryColor() + "§7)");
 
         } else if (args.length == 1 && args[0].equalsIgnoreCase("createChatColor")) {
 
@@ -117,8 +139,19 @@ public class ColorCommand implements CommandExecutor, TabCompleter {
             String permission = args[2];
             String colorCode = name.toUpperCase();
 
+            NetworkColor color = NetworkColor.from(name, colorCode, false, permission);
+
+            if (ColorAPI.getDefaultPrimaryColor().isPresent() && ColorAPI.getDefaultSecondaryColor().isPresent()) {
+                color.setDefaultPrimaryColor(false);
+                color.setDefaultSecondaryColor(false);
+                ColorAPI.saveColorToDatabase(color, true);
+
+                player.sendMessage("§7Created color " + color.toSpigot() + color.getColorName());
+                return true;
+            }
+
             player.sendMessage("§7Now choose if the color should be a primary- or secondary color? §f(true / false)");
-            plugin.getSetupManager().addToSetup(player.getUniqueId(), NetworkColor.from(name, colorCode, false, permission));
+            plugin.getSetupManager().addToSetup(player.getUniqueId(), color);
         }
 
         return true;

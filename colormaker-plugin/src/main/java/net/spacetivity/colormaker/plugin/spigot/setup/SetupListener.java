@@ -46,9 +46,20 @@ public class SetupListener implements Listener {
         }
 
         boolean primary = Boolean.parseBoolean(message[0]);
+
+        if (primary && ColorAPI.getDefaultPrimaryColor().isPresent()) {
+            player.sendMessage("§cThere is already a default primary color.");
+            return;
+        }
+
+        if (!primary && ColorAPI.getDefaultSecondaryColor().isPresent()) {
+            player.sendMessage("§cThere is already a default secondary color.");
+            return;
+        }
+
         NetworkColor color = setupManager.currentColor(player.getUniqueId());
-        color.setPrimaryColor(primary);
-        color.setSecondaryColor(!primary);
+        color.setDefaultPrimaryColor(primary);
+        color.setDefaultSecondaryColor(!primary);
         ColorAPI.saveColorToDatabase(color, true);
 
         player.sendMessage("§7Created color " + color.toSpigot() + color.getColorName() + " §7(Primary: §f" + primary + "§7)");

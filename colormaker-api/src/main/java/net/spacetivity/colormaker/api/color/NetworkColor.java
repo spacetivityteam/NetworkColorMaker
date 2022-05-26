@@ -18,11 +18,11 @@ public class NetworkColor {
     private String colorCode;
     private boolean useHexadecimal;
     private String permission;
-    private boolean isPrimaryColor;
-    private boolean isSecondaryColor;
+    private boolean defaultPrimaryColor;
+    private boolean defaultSecondaryColor;
 
-    public static NetworkColor from(String colorName, String colorCode, boolean useHexadecimal, String permission, boolean isPrimary, boolean isSecondary) {
-        return new NetworkColor(colorName, colorCode, useHexadecimal, permission, isPrimary, isSecondary);
+    public static NetworkColor from(String colorName, String colorCode, boolean useHexadecimal, String permission, boolean defaultPrimaryColor, boolean defaultSecondaryColor) {
+        return new NetworkColor(colorName, colorCode, useHexadecimal, permission, defaultPrimaryColor, defaultSecondaryColor);
     }
 
     public static NetworkColor from(String colorName, String colorCode, boolean useHexadecimal, String permission) {

@@ -93,6 +93,8 @@ public abstract class DatabasePattern<T> {
             PreparedStatement statement = connection.prepareStatement(queryStatement);
             statement.setObject(1, newValue);
             statement.setString(2, key);
+            statement.executeUpdate();
+            statement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

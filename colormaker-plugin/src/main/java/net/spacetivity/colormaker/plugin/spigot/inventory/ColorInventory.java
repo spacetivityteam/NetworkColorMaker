@@ -1,6 +1,7 @@
 package net.spacetivity.colormaker.plugin.spigot.inventory;
 
 import net.spacetivity.colormaker.api.CacheAPI;
+import net.spacetivity.colormaker.api.ColorAPI;
 import net.spacetivity.colormaker.api.color.NetworkColor;
 import net.spacetivity.colormaker.plugin.spigot.SpigotInitializer;
 import net.spacetivity.colormaker.plugin.spigot.inventoryapi.ClickableItem;
@@ -9,6 +10,7 @@ import net.spacetivity.colormaker.plugin.spigot.inventoryapi.SmartInventory;
 import net.spacetivity.colormaker.plugin.spigot.inventoryapi.content.*;
 import net.spacetivity.colormaker.plugin.spigot.item.ItemBuilder;
 import net.spacetivity.colormaker.plugin.spigot.item.SkullBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -21,18 +23,20 @@ import java.util.function.Consumer;
 public class ColorInventory implements InventoryProvider {
 
     private Player player;
+    private ColorType colorType;
     private SpigotInitializer plugin;
 
-    public ColorInventory(Player player) {
+    public ColorInventory(Player player, ColorType colorType) {
         this.player = player;
+        this.colorType = colorType;
         this.plugin = SpigotInitializer.getPlugin(SpigotInitializer.class);
     }
 
-    public static SmartInventory getInventory(Player player) {
+    public static SmartInventory getInventory(Player player, ColorType colorType) {
         return SmartInventory.builder()
-                .provider(new ColorInventory(player))
+                .provider(new ColorInventory(player, colorType))
                 .size(6, 9)
-                .title(InventoryUtils.title("Friends"))
+                .title(InventoryUtils.subTitle("Choose coloring", colorType.getTitle()))
                 .build();
     }
 
@@ -54,7 +58,7 @@ public class ColorInventory implements InventoryProvider {
                 pagination.addToIterator(contents.newIterator(SlotIterator.Type.HORIZONTAL, 1, 0));
             }
 
-            InventoryUtils.loadNavigators(SlotPos.of(0, 1), SlotPos.of(0, 7), player, getInventory(player), pagination);
+            InventoryUtils.loadNavigators(SlotPos.of(0, 1), SlotPos.of(0, 7), player, getInventory(player, colorType), pagination);
         });
     }
 
@@ -65,8 +69,17 @@ public class ColorInventory implements InventoryProvider {
 
         for (NetworkColor color : colors) getDisplayItem(color, itemBuilders::add);
 
-        itemBuilders.sort(Comparator.comparingInt(value -> value.getData("isHexColor", boolean.class) ? 0 : 1));
-        itemBuilders.forEach(itemBuilder -> items.add(ClickableItem.empty(itemBuilder.build())));
+        itemBuilders.sort(Comparator.comparingInt(value -> value.getData("isHexColor", boolean.class) ? 1 : 0));
+        itemBuilders.forEach(itemBuilder -> items.add(ClickableItem.of(itemBuilder.build(), event -> {
+            String colorName = itemBuilder.getData("colorName", String.class);
+            ColorAPI.getPlayerAsync(player.getUniqueId(), colorPlayer -> {
+                if (colorType.equals(ColorType.PRIMARY)) ColorAPI.updatePrimaryColor(colorPlayer, colorName, true);
+                else ColorAPI.updateSecondaryColor(colorPlayer, colorName, true);
+                Bukkit.getScheduler().runTask(plugin, () -> ColorSelectionInventory.getInventory(player).open(player));
+                player.sendMessage("§7Color §f" + colorName + " §7is now your " + (colorType.equals(ColorType.PRIMARY) ? "primary" : "secondary") + " color.");
+            });
+        })));
+
         result.accept(items);
     }
 
@@ -79,6 +92,7 @@ public class ColorInventory implements InventoryProvider {
                     .addItemFlag(ItemFlag.HIDE_DYE);
 
             itemBuilder.setData("isHexColor", true);
+            itemBuilder.setData("colorName", color.getColorName());
 
             result.accept(itemBuilder);
             return;
@@ -92,6 +106,7 @@ public class ColorInventory implements InventoryProvider {
                 .addItemFlag(ItemFlag.HIDE_DYE);
 
         itemBuilder.setData("isHexColor", false);
+        itemBuilder.setData("colorName", color.getColorName());
 
         result.accept(itemBuilder);
     }

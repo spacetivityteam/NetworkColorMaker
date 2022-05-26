@@ -53,8 +53,8 @@ public class ColorRepository {
         colorFields.put("colorCode", "VARCHAR(70) NOT NULL");
         colorFields.put("useHexadecimal", "TINYINT NOT NULL");
         colorFields.put("permission", "VARCHAR(70) NOT NULL");
-        colorFields.put("isPrimaryColor", "TINYINT NOT NULL");
-        colorFields.put("isSecondaryColor", "TINYINT NOT NULL");
+        colorFields.put("defaultPrimaryColor", "TINYINT NOT NULL");
+        colorFields.put("defaultSecondaryColor", "TINYINT NOT NULL");
         DatabaseRepository.getInstance().getDatabaseManager().createTable("colors", colorFields);
 
         LinkedHashMap<String, String> playerFields = new LinkedHashMap<>();

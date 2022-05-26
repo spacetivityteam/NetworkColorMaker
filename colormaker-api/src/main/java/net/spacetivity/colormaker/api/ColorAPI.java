@@ -31,27 +31,25 @@ public class ColorAPI {
     }
 
     public static void setDefaultPrimaryColor(NetworkColor color) {
-        ColorRepository.getInstance().getNetworkColorManager().updateField("colorName", color.getColorName(), "isPrimaryColor", !color.isPrimaryColor());
+        ColorRepository.getInstance().getNetworkColorManager().updateField("colorName", color.getColorName(),
+                "defaultPrimaryColor", color.isDefaultPrimaryColor());
     }
 
     public static void setDefaultSecondaryColor(NetworkColor color) {
-        ColorRepository.getInstance().getNetworkColorManager().updateField("colorName", color.getColorName(), "isSecondaryColor", !color.isSecondaryColor());
+        ColorRepository.getInstance().getNetworkColorManager().updateField("colorName", color.getColorName(),
+                "defaultSecondaryColor", color.isDefaultSecondaryColor());
+    }
+
+    public static Optional<NetworkColor> getColor(String colorName) {
+        return CacheAPI.Color.getCachedColors().stream().filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
     }
 
     public static Optional<NetworkColor> getDefaultPrimaryColor() {
-        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).findAny();
+        return CacheAPI.Color.getColor(NetworkColor::isDefaultPrimaryColor).stream().findFirst();
     }
 
     public static Optional<NetworkColor> getDefaultSecondaryColor() {
-        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).findAny();
-    }
-
-    public static Optional<NetworkColor> getPrimaryColor(String colorName) {
-        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
-    }
-
-    public static Optional<NetworkColor> getSecondaryColor(String colorName) {
-        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+        return CacheAPI.Color.getColor(NetworkColor::isDefaultSecondaryColor).stream().findFirst();
     }
 
     public static Optional<ColorPlayer> createNewPlayer(UUID uniqueId) {
@@ -84,17 +82,17 @@ public class ColorAPI {
         return NetworkColor.fromCachedColor(secondaryColor);
     }
 
-    public static void updatePrimaryColor(ColorPlayer colorPlayer, String primaryColor) {
+    public static void updatePrimaryColor(ColorPlayer colorPlayer, String primaryColor, boolean updateCache) {
         ColorPlayerManager manager = ColorRepository.getInstance().getColorPlayerManager();
         colorPlayer.setPrimaryColor(primaryColor);
         manager.updateField("uniqueId", colorPlayer.getUniqueId().toString(), "primaryColor", colorPlayer.getPrimaryColor());
-        CacheAPI.Player.update(colorPlayer);
+        if (updateCache) CacheAPI.Player.update(colorPlayer);
     }
 
-    public static void updateSecondaryColor(ColorPlayer colorPlayer, String secondaryColor) {
+    public static void updateSecondaryColor(ColorPlayer colorPlayer, String secondaryColor, boolean updateCache) {
         ColorPlayerManager manager = ColorRepository.getInstance().getColorPlayerManager();
         colorPlayer.setSecondaryColor(secondaryColor);
-        manager.updateField("uniqueId", colorPlayer.getUniqueId().toString(), "secondaryColor", colorPlayer.getPrimaryColor());
-        CacheAPI.Player.update(colorPlayer);
+        manager.updateField("uniqueId", colorPlayer.getUniqueId().toString(), "secondaryColor", colorPlayer.getSecondaryColor());
+        if (updateCache) CacheAPI.Player.update(colorPlayer);
     }
 }
