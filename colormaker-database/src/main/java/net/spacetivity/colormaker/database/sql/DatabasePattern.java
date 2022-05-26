@@ -1,6 +1,7 @@
-package net.spacetivity.colormaker.database;
+package net.spacetivity.colormaker.database.sql;
 
 import lombok.Getter;
+import net.spacetivity.colormaker.database.DatabaseRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

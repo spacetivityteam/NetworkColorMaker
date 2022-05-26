@@ -1,11 +1,14 @@
-package net.spacetivity.colormaker.database;
+package net.spacetivity.colormaker.database.sql;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
+import net.spacetivity.colormaker.database.DatabaseRepository;
+import net.spacetivity.colormaker.database.file.SQLFile;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.StringJoiner;
 
@@ -26,9 +29,13 @@ public final class DatabaseManager {
         dataSource.addDataSourceProperty("cachePrepStmts", "true");
         dataSource.addDataSourceProperty("prepStmtCacheSize", "250");
         dataSource.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        dataSource.setJdbcUrl("jdbc:mariadb://10.20.20.2:3306/color_manager");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("UQUznpR4dSq1y7iduonh");
+
+        DatabaseRepository instance = DatabaseRepository.getInstance();
+        SQLFile sqlFile = instance.getFileUtils().readFile(instance.getConfigFileManager().getSqlFilePath().toFile(), SQLFile.class);
+
+        dataSource.setJdbcUrl(MessageFormat.format("jdbc:mariadb://{0}:{1}/{2}", sqlFile.getHostname(), sqlFile.getPort(), sqlFile.getDatabase()));
+        dataSource.setUsername(sqlFile.getUser());
+        dataSource.setPassword(sqlFile.getPassword());
     }
 
     public Connection getConnection() throws SQLException {

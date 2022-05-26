@@ -11,7 +11,7 @@ public class BungeeInitializer extends Plugin {
 
     @Override
     public void onEnable() {
-        this.repository = new DatabaseRepository();
+        this.repository = new DatabaseRepository(getDataFolder().getPath());
     }
 
     @Override

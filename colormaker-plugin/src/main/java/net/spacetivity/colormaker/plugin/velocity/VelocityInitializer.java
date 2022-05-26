@@ -27,7 +27,7 @@ public class VelocityInitializer {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        ColorAPI.onEnable(true);
+        ColorAPI.onEnableProxy();
     }
 
     @Subscribe

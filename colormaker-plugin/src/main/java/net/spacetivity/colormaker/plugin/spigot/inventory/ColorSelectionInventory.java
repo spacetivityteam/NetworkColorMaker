@@ -49,8 +49,8 @@ public class ColorSelectionInventory implements InventoryProvider {
         NetworkColor secondaryColor = ColorAPI.getSecondaryColor(player.getUniqueId());
         contents.set(1, 4, ClickableItem.empty(ItemBuilder.builder(Material.END_CRYSTAL, "§7Your colors:")
                 .setLoresSpigot(List.of(
-                        "§7Primary: " + primaryColor.toSpigot() + primaryColor.getColorName()
-                        , "§7Secondary: " + secondaryColor.toSpigot() + secondaryColor.getColorName()
+                        "§7Primary: " + primaryColor.toSpigot() + primaryColor.getColorName(),
+                        "§7Secondary: " + secondaryColor.toSpigot() + secondaryColor.getColorName()
                 ))
                 .build()));
     }

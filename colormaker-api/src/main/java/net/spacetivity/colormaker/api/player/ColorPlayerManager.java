@@ -1,6 +1,6 @@
 package net.spacetivity.colormaker.api.player;
 
-import net.spacetivity.colormaker.database.DatabasePattern;
+import net.spacetivity.colormaker.database.sql.DatabasePattern;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -8,11 +8,9 @@ import net.spacetivity.colormaker.api.color.NetworkColorManager;
 import net.spacetivity.colormaker.api.player.ColorPlayer;
 import net.spacetivity.colormaker.api.player.ColorPlayerManager;
 import net.spacetivity.colormaker.database.DatabaseRepository;
+import org.redisson.api.RTopicRx;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Getter
@@ -31,16 +29,33 @@ public class ColorRepository {
     private final NetworkColorManager networkColorManager;
     private final ColorPlayerManager colorPlayerManager;
 
+    private RTopicRx updateChannel;
+
     public ColorRepository(boolean useProxy) {
         instance = this;
         this.useProxy = useProxy;
         this.createTables();
         this.networkColorManager = new NetworkColorManager("colors");
         this.colorPlayerManager = new ColorPlayerManager("players");
+        this.updateChannel = null;
+
+        if (useProxy) {
+            DatabaseRepository.getInstance().enableRedis();
+            this.updateChannel = DatabaseRepository.getInstance().getRedissonManager().getConnector().getTopic("colorUpdateChannel");
+        }
     }
 
-    public static void onEnable(boolean useProxy) {
+    public static void onEnableSpigot(boolean useProxy) {
         new ColorRepository(useProxy);
+    }
+
+    public static void onEnableProxy() {
+        CacheAPI.Packet.listenForPlayerUpdates(packet -> {
+            UUID uniqueId = packet.getUniqueId();
+            ColorAPI.getPlayerAsync(uniqueId, CacheAPI.Player::update);
+        });
+
+        CacheAPI.Packet.listenForColorUpdates(packet -> CacheAPI.Color.updateCachedColorsAsync());
     }
 
     public void onDisable() {

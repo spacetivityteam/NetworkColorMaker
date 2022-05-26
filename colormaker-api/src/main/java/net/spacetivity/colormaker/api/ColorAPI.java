@@ -16,8 +16,13 @@ public class ColorAPI {
         return ColorRepository.getInstance().isUseProxy();
     }
 
-    public static void onEnable(boolean useProxy) {
-        ColorRepository.onEnable(useProxy);
+    public static void onEnableSpigot(boolean useProxy) {
+        ColorRepository.onEnableSpigot(useProxy);
+        CacheAPI.Color.cacheColors();
+    }
+
+    public static void onEnableProxy() {
+        ColorRepository.onEnableProxy();
         CacheAPI.Color.cacheColors();
     }
 

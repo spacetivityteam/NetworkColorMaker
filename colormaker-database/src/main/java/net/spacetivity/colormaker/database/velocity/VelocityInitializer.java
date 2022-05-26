@@ -28,7 +28,7 @@ public class VelocityInitializer {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        this.repository = new DatabaseRepository();
+        this.repository = new DatabaseRepository(" ");
     }
 
     @Subscribe

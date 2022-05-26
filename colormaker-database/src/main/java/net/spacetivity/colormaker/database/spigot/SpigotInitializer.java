@@ -11,7 +11,7 @@ public class SpigotInitializer extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.repository = new DatabaseRepository();
+        this.repository = new DatabaseRepository(getDataFolder().getPath());
     }
 
     @Override

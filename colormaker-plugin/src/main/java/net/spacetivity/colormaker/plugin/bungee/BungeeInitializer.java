@@ -8,8 +8,7 @@ public class BungeeInitializer extends Plugin {
 
     @Override
     public void onEnable() {
-        ColorAPI.onEnable(true);
-    }
+        ColorAPI.onEnableProxy();    }
 
     @Override
     public void onDisable() {

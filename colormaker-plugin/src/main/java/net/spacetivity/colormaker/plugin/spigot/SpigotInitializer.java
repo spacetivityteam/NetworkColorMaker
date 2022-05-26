@@ -29,7 +29,7 @@ public class SpigotInitializer extends JavaPlugin {
     public void onEnable() {
         this.configurationFile = new ConfigurationFile(this);
         this.colorHeadFile = new ColorHeadFile(this);
-        ColorAPI.onEnable(configurationFile.isUseProxy());
+        ColorAPI.onEnableSpigot(configurationFile.isUseProxy());
         this.inventoryManager = new InventoryManager(this);
         this.inventoryManager.init();
         this.setupManager = new SetupManager();
