@@ -27,15 +27,21 @@ public class PlayerListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        ColorAPI.getPlayerAsync(player.getUniqueId(), colorPlayer -> {
-            if (colorPlayer == null) {
-                Optional<ColorPlayer> newColorPlayer = ColorAPI.createNewPlayer(player.getUniqueId());
-                newColorPlayer.ifPresent(ColorPlayer::putInCache);
-                return;
-            }
+        if (!ColorAPI.isProxyUsed()) {
 
-            colorPlayer.putInCache();
-        });
+            ColorAPI.getPlayerAsync(player.getUniqueId(), colorPlayer -> {
+                if (colorPlayer == null) {
+                    Optional<ColorPlayer> newColorPlayer = ColorAPI.createNewPlayer(player.getUniqueId());
+                    newColorPlayer.ifPresent(ColorPlayer::putInCache);
+                    return;
+                }
+
+                colorPlayer.putInCache();
+            });
+
+        } else {
+            ColorAPI.getPlayerAsync(player.getUniqueId(), ColorPlayer::putInCache);
+        }
     }
 
     @EventHandler

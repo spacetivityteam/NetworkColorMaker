@@ -8,7 +8,9 @@ public class BungeeInitializer extends Plugin {
 
     @Override
     public void onEnable() {
-        ColorAPI.onEnableProxy();    }
+        ColorAPI.onEnableProxy();
+        getProxy().getPluginManager().registerListener(this, new PlayerListener());
+    }
 
     @Override
     public void onDisable() {

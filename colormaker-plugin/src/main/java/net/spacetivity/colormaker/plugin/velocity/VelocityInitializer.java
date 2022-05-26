@@ -28,10 +28,11 @@ public class VelocityInitializer {
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         ColorAPI.onEnableProxy();
+        server.getEventManager().register(this, new PlayerListener());
     }
 
     @Subscribe
-    public void onProxyInitialization(ProxyShutdownEvent event) {
+    public void onProxyShutdown(ProxyShutdownEvent event) {
         ColorAPI.onDisable();
     }
 }
