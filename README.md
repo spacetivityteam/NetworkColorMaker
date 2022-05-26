@@ -30,7 +30,7 @@ public void onPlayerJoin(SpigotColorUpdateEvent event) {
 ````
 
 
-## Installation
+## Including API in your project
 
 ### Gradle
 #### Groovy
