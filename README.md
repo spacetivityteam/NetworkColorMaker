@@ -8,9 +8,9 @@ colors they want to use for prefixes and highlighting. (Available for: Spigot, P
 #### There are two main classes for API usages. (ColorAPI.java & CacheAPI.java) With this classes you can access all important methods to update & manage player colors.
 
 #### ColorAPI usage example
-Here you can see an example to use the 'toPaper' method for the paper included kyori adventure api
+Here you can see an example to use the 'toPaper' method for the paper included kyori adventure api. If you are using the proxy software 'Velocity' there is a 'toVelocity' method also with the kyori adventure api to add messages to message-components.
 ````java
-public void testPaper(Player player) {
+public void test(Player player) {
     NetworkColor primaryColor = ColorAPI.getPrimaryColor(player.getUniqueId());
     NetworkColor secondaryColor = ColorAPI.getSecondaryColor(player.getUniqueId());
 
@@ -22,9 +22,9 @@ public void testPaper(Player player) {
 }
 ````
 
-Here you can see an example to use the 'toSpigot' to use colors in a string send by the sendMessage method of spigot / bukkit
+Here you can see an example to use the 'toSpigot' to use colors in a string send by the sendMessage method of spigot / bukkit. If you are using the proxy software bungeecord too, there is the method 'toBungee' to use these colors in chat messages.
 ````java
-public void testSpigot(Player player) {
+public void test(Player player) {
     NetworkColor primaryColor = ColorAPI.getPrimaryColor(player.getUniqueId());
     NetworkColor secondaryColor = ColorAPI.getSecondaryColor(player.getUniqueId());
 
