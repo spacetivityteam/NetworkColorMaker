@@ -20,6 +20,15 @@ public void test(Player player) {
 }
 ````
 
+### ColorAPI Event
+This event is fired when a player updated his primary or secondary color
+````java
+@EventHandler
+public void onPlayerJoin(SpigotColorUpdateEvent event) {
+    ColorPlayer colorPlayer = event.getColorPlayer();
+}
+````
+
 
 ## Installation
 

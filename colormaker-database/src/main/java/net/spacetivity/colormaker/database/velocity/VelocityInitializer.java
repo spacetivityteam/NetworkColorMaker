@@ -5,10 +5,12 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lombok.Getter;
 import net.spacetivity.colormaker.database.DatabaseRepository;
 
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -20,15 +22,18 @@ public class VelocityInitializer {
     private final Logger logger;
     private DatabaseRepository repository;
 
+    private final Path dataDirectory;
+
     @Inject
-    public VelocityInitializer(ProxyServer server, Logger logger) {
+    public VelocityInitializer(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
         this.server = server;
         this.logger = logger;
+        this.dataDirectory = dataDirectory;
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
-        this.repository = new DatabaseRepository(" ");
+        this.repository = new DatabaseRepository(dataDirectory.toString());
     }
 
     @Subscribe

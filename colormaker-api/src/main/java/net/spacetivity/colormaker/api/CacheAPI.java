@@ -1,16 +1,15 @@
 package net.spacetivity.colormaker.api;
 
 import net.spacetivity.colormaker.api.color.NetworkColor;
+import net.spacetivity.colormaker.api.event.SpigotColorUpdateEvent;
 import net.spacetivity.colormaker.api.messaging.CachedColorsUpdatePacket;
 import net.spacetivity.colormaker.api.messaging.PlayerColorUpdatePacket;
 import net.spacetivity.colormaker.api.player.ColorPlayer;
 import net.spacetivity.colormaker.database.redis.RedisPacket;
+import org.bukkit.Bukkit;
 import org.redisson.api.RTopicRx;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -63,6 +62,7 @@ public class CacheAPI {
             deleteFromCache(player.getUniqueId());
             putInCache(player);
             if (ColorAPI.isProxyUsed()) Packet.sendPacket(new PlayerColorUpdatePacket(player.getUniqueId()));
+            else Bukkit.getPluginManager().callEvent(new SpigotColorUpdateEvent(Objects.requireNonNull(Bukkit.getPlayer(player.getUniqueId())), player));
         }
 
         public static ColorPlayer getCachedPlayer(UUID uniqueId) {
