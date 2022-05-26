@@ -30,7 +30,7 @@ public class NetworkColor {
     }
 
     public static NetworkColor fromCachedColor(String colorName) {
-        return CacheAPI.Colors.getCachedColors().stream().filter(networkColor -> networkColor.getColorName().equalsIgnoreCase(colorName))
+        return CacheAPI.Color.getCachedColors().stream().filter(networkColor -> networkColor.getColorName().equalsIgnoreCase(colorName))
                 .findFirst().orElse(null);
     }
 

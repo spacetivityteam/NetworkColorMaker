@@ -40,7 +40,7 @@ public class SetupListener implements Listener {
             return;
         }
 
-        if (CacheAPI.Colors.isExisting(message[0])) {
+        if (CacheAPI.Color.isExisting(message[0])) {
             player.sendMessage("§cThis color is already stored in the database & cache!");
             return;
         }

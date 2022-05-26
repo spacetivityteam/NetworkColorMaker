@@ -27,6 +27,6 @@ public class ConfigurationFile extends FileAPI {
     public void cacheData(YamlConfiguration configuration) {
         this.useProxy = configuration.getBoolean("useProxy");
         this.commandPermission = configuration.getString("commandPermission");
-        this.customColorDisplayItem = configuration.getString("MOJANG_BANNER_PATTERN");
+        this.customColorDisplayItem = configuration.getString("customColorDisplayItem");
     }
 }

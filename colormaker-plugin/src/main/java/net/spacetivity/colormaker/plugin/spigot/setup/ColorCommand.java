@@ -3,6 +3,7 @@ package net.spacetivity.colormaker.plugin.spigot.setup;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.*;
 import net.spacetivity.colormaker.api.CacheAPI;
+import net.spacetivity.colormaker.api.ColorAPI;
 import net.spacetivity.colormaker.api.color.NetworkColor;
 import net.spacetivity.colormaker.plugin.spigot.SpigotInitializer;
 import org.bukkit.command.*;
@@ -42,9 +43,40 @@ public class ColorCommand implements CommandExecutor, TabCompleter {
             player.sendMessage("§f> §7/color createChatColor");
             player.sendMessage("§f> §7/color createCustomColor <Name> <HexCode> <isPrimary>");
 
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("createCustomColor")) {
+        } else if (args.length == 4 && args[0].equalsIgnoreCase("createCustomColor")) {
 
-            player.sendMessage("test");
+            String name = args[1];
+
+            if (CacheAPI.Color.isExisting(name)) {
+                player.sendMessage("§cThis color is already stored in the database & cache!");
+                return true;
+            }
+
+            if (!args[2].startsWith("#")) {
+                player.sendMessage("§cThe color code has to start with a §e# §cchar!");
+                return true;
+            }
+
+            String colorCode = args[2];
+
+            if (!args[3].equalsIgnoreCase("true") && !args[3].equalsIgnoreCase("false")) {
+                player.sendMessage("§cPlease enter a boolean! §e(true / false)");
+                return true;
+            }
+
+            boolean isPrimary = Boolean.parseBoolean(args[3]);
+
+            NetworkColor newColor = NetworkColor.from(
+                    name,
+                    colorCode,
+                    true,
+                    "color." + name,
+                    isPrimary,
+                    !isPrimary
+            );
+
+            ColorAPI.saveColorToDatabase(newColor, true);
+            player.sendMessage("§7Created color " + newColor.toSpigot() + newColor.getColorName() + " §7(Primary: §f" + isPrimary + "§7)");
 
         } else if (args.length == 1 && args[0].equalsIgnoreCase("createChatColor")) {
 
@@ -77,7 +109,7 @@ public class ColorCommand implements CommandExecutor, TabCompleter {
 
             String name = args[1];
 
-            if (CacheAPI.Colors.isExisting(name)) {
+            if (CacheAPI.Color.isExisting(name)) {
                 player.sendMessage("This color is already stored in the database & cache!");
                 return true;
             }

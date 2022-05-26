@@ -38,6 +38,18 @@ public class ItemBuilder {
 
     protected final Gson gson = new GsonBuilder().create();
 
+    public static ItemStack placeHolder(Material material) {
+        return new ItemBuilder(material)
+                .setDisplayNameSpigot(" ")
+                .build();
+    }
+
+    public static ItemStack of(Material material, String displayName) {
+        return new ItemBuilder(material)
+                .setDisplayNameSpigot(displayName)
+                .build();
+    }
+
     public ItemBuilder(ItemStack itemStack) {
         this.itemStack = new ItemStack(itemStack);
         this.itemMeta = itemStack.getItemMeta();

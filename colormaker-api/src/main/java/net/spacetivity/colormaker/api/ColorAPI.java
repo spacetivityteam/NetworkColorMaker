@@ -18,7 +18,7 @@ public class ColorAPI {
 
     public static void onEnable(boolean useProxy) {
         ColorRepository.onEnable(useProxy);
-        CacheAPI.Colors.cacheColors();
+        CacheAPI.Color.cacheColors();
     }
 
     public static void onDisable() {
@@ -27,7 +27,7 @@ public class ColorAPI {
 
     public static void saveColorToDatabase(NetworkColor color, boolean updateCache) {
         ColorRepository.getInstance().getNetworkColorManager().insertObject(color);
-        if (updateCache) CacheAPI.Colors.updateCachedColorsAsync();
+        if (updateCache) CacheAPI.Color.updateCachedColorsAsync();
     }
 
     public static void setDefaultPrimaryColor(NetworkColor color) {
@@ -39,19 +39,19 @@ public class ColorAPI {
     }
 
     public static Optional<NetworkColor> getDefaultPrimaryColor() {
-        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).findAny();
+        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).findAny();
     }
 
     public static Optional<NetworkColor> getDefaultSecondaryColor() {
-        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).findAny();
+        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).findAny();
     }
 
     public static Optional<NetworkColor> getPrimaryColor(String colorName) {
-        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isPrimaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
     }
 
     public static Optional<NetworkColor> getSecondaryColor(String colorName) {
-        return CacheAPI.Colors.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
+        return CacheAPI.Color.getCachedColors().stream().filter(NetworkColor::isSecondaryColor).filter(color -> color.getColorName().equalsIgnoreCase(colorName)).findFirst();
     }
 
     public static Optional<ColorPlayer> createNewPlayer(UUID uniqueId) {

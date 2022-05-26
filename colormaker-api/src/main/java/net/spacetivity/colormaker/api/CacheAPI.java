@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class CacheAPI {
 
-    public static class Colors {
+    public static class Color {
         public static List<NetworkColor> getCachedColors() {
             return ColorRepository.getInstance().getCachedColors();
         }

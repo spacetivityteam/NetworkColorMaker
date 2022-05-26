@@ -13,7 +13,6 @@ import net.spacetivity.colormaker.plugin.spigot.setup.SetupListener;
 import net.spacetivity.colormaker.plugin.spigot.setup.SetupManager;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
@@ -44,18 +43,20 @@ public class SpigotInitializer extends JavaPlugin {
         ColorAPI.onDisable();
     }
 
-    public ItemStack getDisplayItem(NetworkColor color) {
+    public ItemBuilder getDisplayItem(NetworkColor color) {
         if (color.isUseHexadecimal()) {
             return new ItemBuilder(Material.valueOf(configurationFile.getCustomColorDisplayItem()))
                     .setDisplayNameSpigot(color.toSpigot() + color.getColorName())
                     .setLores(List.of("§7Permission: §b" + color.getPermission(), " ", color.isUseHexadecimal() ? "§8§oCustom" : "§8§oChatColor"))
                     .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
-                    .addItemFlag(ItemFlag.HIDE_DYE)
-                    .build();
+                    .addItemFlag(ItemFlag.HIDE_DYE);
         } else {
             return new SkullBuilder()
                     .setOwnerWithGameProfile(getValueForChatColor(color.getColorName()))
-                    .build();
+                    .setDisplayNameSpigot(color.toSpigot() + color.getColorName())
+                    .setLores(List.of("§7Permission: §b" + color.getPermission(), " ", color.isUseHexadecimal() ? "§8§oCustom" : "§8§oChatColor"))
+                    .addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+                    .addItemFlag(ItemFlag.HIDE_DYE);
         }
     }
 
