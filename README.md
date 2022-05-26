@@ -5,10 +5,12 @@ colors they want to use for prefixes and highlighting. (Available for: Spigot, P
 
 ## Usage
 
-#### ColorAPI.java
-Use this API class to access all methods for managing colors and player settings
+#### There are two main classes for API usages. (ColorAPI.java & CacheAPI.java) With this classes you can access all important methods to update & manage player colors.
+
+#### ColorAPI usage example
+Here you can see an example to use the 'toPaper' method for the paper included kyori adventure api
 ````java
-public void test(Player player) {
+public void testPaper(Player player) {
     NetworkColor primaryColor = ColorAPI.getPrimaryColor(player.getUniqueId());
     NetworkColor secondaryColor = ColorAPI.getSecondaryColor(player.getUniqueId());
 
@@ -17,6 +19,16 @@ public void test(Player player) {
         .append(Component.text(" has the level: "))
         .append(Component.text(player.getLevel()).color(secondaryColor.toPaper()))
         .append(Component.text(" (For: Paper & Velocity)")));
+}
+````
+
+Here you can see an example to use the 'toSpigot' to use colors in a string send by the sendMessage method of spigot / bukkit
+````java
+public void testSpigot(Player player) {
+    NetworkColor primaryColor = ColorAPI.getPrimaryColor(player.getUniqueId());
+    NetworkColor secondaryColor = ColorAPI.getSecondaryColor(player.getUniqueId());
+
+    player.sendMessage(primaryColor.toSpigot() + player.getName() + " §rhas the level: " + secondaryColor.toSpigot() + player.getLevel());
 }
 ````
 

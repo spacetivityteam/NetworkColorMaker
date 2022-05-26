@@ -4,8 +4,6 @@ import net.spacetivity.colormaker.api.CacheAPI;
 import net.spacetivity.colormaker.api.ColorAPI;
 import net.spacetivity.colormaker.api.event.SpigotColorUpdateEvent;
 import net.spacetivity.colormaker.api.player.ColorPlayer;
-import net.spacetivity.colormaker.plugin.spigot.inventory.ColorSelectionInventory;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,10 +36,6 @@ public class PlayerListener implements Listener {
 
             colorPlayer.putInCache();
         });
-
-        Bukkit.getScheduler().runTaskLater(SpigotInitializer.getPlugin(SpigotInitializer.class), () -> {
-            ColorSelectionInventory.getInventory(player).open(player);
-        }, 10);
     }
 
     @EventHandler
