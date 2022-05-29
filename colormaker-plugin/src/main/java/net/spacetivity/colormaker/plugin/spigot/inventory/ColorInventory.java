@@ -50,7 +50,7 @@ public class ColorInventory implements InventoryProvider {
         loadAllColors(player, clickableItems -> {
             if (clickableItems.isEmpty()) {
                 contents.set(SlotPos.of(2, 4), ClickableItem.empty(new ItemBuilder(Material.BARRIER)
-                        .setDisplayName("§cYou dont have any friends! :(")
+                        .setDisplayName("§cThere are no colors in the database & cache! :(")
                         .build()));
             } else {
                 pagination.setItems(clickableItems.toArray(new ClickableItem[0]));
@@ -112,7 +112,7 @@ public class ColorInventory implements InventoryProvider {
     }
 
     private void setPlaceholders(InventoryContents contents) {
-        contents.fillRow(0, ClickableItem.empty(ItemBuilder.placeHolder(Material.LIGHT_BLUE_STAINED_GLASS_PANE)));
-        contents.fillRow(5, ClickableItem.empty(ItemBuilder.placeHolder(Material.LIGHT_BLUE_STAINED_GLASS_PANE)));
+        contents.fillRow(0, ClickableItem.empty(ItemBuilder.placeHolder(Material.CYAN_STAINED_GLASS_PANE)));
+        contents.fillRow(5, ClickableItem.empty(ItemBuilder.placeHolder(Material.CYAN_STAINED_GLASS_PANE)));
     }
 }
