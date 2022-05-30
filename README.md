@@ -3,6 +3,9 @@
 Plugin & API to provide a platform for Minecraft networks and servers to let their players choose the 
 colors they want to use for prefixes and highlighting. (Available for: Spigot, Paper, Velocity & BungeeCord)
 
+If you are using a proxy (velocity or bungeecord) the spigot server will send update (redis-)packets to the proxy server
+when a player changes his primary or secondary color or when a new color was created.
+
 ## Usage
 
 #### There are two main classes for API usages. (ColorAPI.java & CacheAPI.java) With this classes you can access all important methods to update & manage player colors.
