@@ -36,11 +36,16 @@ public void test(Player player) {
 ````
 
 ### ColorAPI Event
-This event is fired when a player updated his primary or secondary color
+This event is fired when a player updated his primary or secondary color. This
+can for example, help a server to update its scoreboard, when the player colors
+change.
 ````java
 @EventHandler
-public void onPlayerJoin(SpigotColorUpdateEvent event) {
+public void onColorUpdatePlayer(SpigotColorUpdateEvent event) {
+    Player player = event.getPlayer();
     ColorPlayer colorPlayer = event.getColorPlayer();
+    String primaryColor = colorPlayer.getPrimaryColor();
+    String secondaryColor = colorPlayer.getSecondaryColor();
 }
 ````
 
