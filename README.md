@@ -8,6 +8,7 @@ when a player changes his primary or secondary color or when a new color was cre
 
 ## Control Inventories
 ![Color Inventory](https://i.imgur.com/WqNwnmD.png)
+![Color Selection Inventory](https://i.imgur.com/oUbDiB5.png)
 
 ## Usage
 
