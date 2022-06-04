@@ -73,10 +73,10 @@ public class ColorInventory implements InventoryProvider {
         itemBuilders.forEach(itemBuilder -> items.add(ClickableItem.of(itemBuilder.build(), event -> {
             String colorName = itemBuilder.getData("colorName", String.class);
             ColorAPI.getPlayerAsync(player.getUniqueId(), colorPlayer -> {
-                if (colorType.equals(ColorType.PRIMARY)) ColorAPI.updatePrimaryColor(colorPlayer, colorName, true);
-                else ColorAPI.updateSecondaryColor(colorPlayer, colorName, true);
                 Bukkit.getScheduler().runTask(plugin, () -> ColorSelectionInventory.getInventory(player).open(player));
                 player.sendMessage("§7Color §f" + colorName + " §7is now your " + (colorType.equals(ColorType.PRIMARY) ? "primary" : "secondary") + " color.");
+                if (colorType.equals(ColorType.PRIMARY)) ColorAPI.updatePrimaryColor(colorPlayer, colorName, true);
+                else ColorAPI.updateSecondaryColor(colorPlayer, colorName, true);
             });
         })));
 
