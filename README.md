@@ -6,6 +6,9 @@ colors they want to use for prefixes and highlighting. (Available for: Spigot, P
 If you are using a proxy (velocity or bungeecord) the spigot server will send update (redis-)packets to the proxy server
 when a player changes his primary or secondary color or when a new color was created.
 
+## Control Inventories
+![alt text](https://imgur.com/a/A0Qe62V)
+
 ## Usage
 
 #### There are two main classes for API usages. (ColorAPI.java & CacheAPI.java) With this classes you can access all important methods to update & manage player colors.
