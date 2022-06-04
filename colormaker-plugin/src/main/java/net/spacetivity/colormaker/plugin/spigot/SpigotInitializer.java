@@ -36,6 +36,7 @@ public class SpigotInitializer extends JavaPlugin {
         new PlayerListener(this);
         new SetupListener(this);
         new ColorCommand(this);
+        new ColorGuiCommand(this);
     }
 
     @Override

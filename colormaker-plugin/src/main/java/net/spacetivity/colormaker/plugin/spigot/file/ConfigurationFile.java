@@ -8,7 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class ConfigurationFile extends FileAPI {
 
     private boolean useProxy;
-    private String commandPermission;
+    private String setupCommandPermission;
+    private String colorGuiCommandPermission;
     private String customColorDisplayItem;
 
     public ConfigurationFile(JavaPlugin plugin) {
@@ -18,7 +19,8 @@ public class ConfigurationFile extends FileAPI {
     @Override
     public void insertDefaults(YamlConfiguration configuration) {
         configuration.set("useProxy", false);
-        configuration.set("commandPermission", "colormaker.commands");
+        configuration.set("setupCommandPermission", "colormaker.command.setup");
+        configuration.set("colorGuiCommandPermission","colormaker.command.gui");
         configuration.set("customColorDisplayItem", "MOJANG_BANNER_PATTERN");
         saveFile();
     }
@@ -26,7 +28,8 @@ public class ConfigurationFile extends FileAPI {
     @Override
     public void cacheData(YamlConfiguration configuration) {
         this.useProxy = configuration.getBoolean("useProxy");
-        this.commandPermission = configuration.getString("commandPermission");
+        this.setupCommandPermission = configuration.getString("setupCommandPermission");
+        this.colorGuiCommandPermission = configuration.getString("colorGuiCommandPermission");
         this.customColorDisplayItem = configuration.getString("customColorDisplayItem");
     }
 }

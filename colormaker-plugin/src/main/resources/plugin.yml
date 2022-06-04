@@ -8,3 +8,4 @@ depend:
   - NetworkColorMakerDatabase
 commands:
   color:
+  colorgui:

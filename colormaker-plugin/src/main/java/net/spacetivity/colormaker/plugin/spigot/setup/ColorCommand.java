@@ -32,7 +32,7 @@ public class ColorCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return true;
 
-        String commandPermission = plugin.getConfigurationFile().getCommandPermission();
+        String commandPermission = plugin.getConfigurationFile().getSetupCommandPermission();
         if (!player.hasPermission(commandPermission)) {
             player.sendMessage("§4You are lacking the permission §e" + commandPermission + " §4to execute that command!");
             return true;

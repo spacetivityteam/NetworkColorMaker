@@ -2,7 +2,6 @@ package net.spacetivity.colormaker.plugin.spigot;
 
 import net.spacetivity.colormaker.api.CacheAPI;
 import net.spacetivity.colormaker.api.ColorAPI;
-import net.spacetivity.colormaker.api.event.SpigotColorUpdateEvent;
 import net.spacetivity.colormaker.api.player.ColorPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,11 +15,6 @@ public class PlayerListener implements Listener {
 
     public PlayerListener(SpigotInitializer initializer) {
         initializer.getServer().getPluginManager().registerEvents(this, initializer);
-    }
-
-    @EventHandler
-    public void onPlayerJoin(SpigotColorUpdateEvent event) {
-        ColorPlayer colorPlayer = event.getColorPlayer();
     }
 
     @EventHandler
