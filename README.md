@@ -55,6 +55,7 @@ public void onColorUpdatePlayer(SpigotColorUpdateEvent event) {
 
 
 ## Including API in your project
+Public repository comming soon...
 
 ### Gradle
 #### Groovy
