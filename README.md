@@ -7,7 +7,7 @@ If you are using a proxy (velocity or bungeecord) the spigot server will send up
 when a player changes his primary or secondary color or when a new color was created.
 
 ## Control Inventories
-![Color Inventory](https://imgur.com/gallery/A0Qe62V)
+![Color Inventory](https://i.imgur.com/WqNwnmD.png)
 
 ## Usage
 
