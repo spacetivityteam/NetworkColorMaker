@@ -18,8 +18,8 @@ public class RedissonManager {
         config.setCodec(new SerializationCodec());
         config.setNettyThreads(4);
         config.useSingleServer()
-                .setAddress("redis://10.20.20.2:6379")
-                .setPassword("UQUznpR4dSq1y7iduonh");
+                .setAddress("redis://-:-")
+                .setPassword("-");
 
         this.client = Redisson.create(config);
         this.connector = this.client.rxJava();
